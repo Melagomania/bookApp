@@ -1,3 +1,3 @@
-export const ADD_BOOK = "ADD_BOOK";
-export const REMOVE_BOOK = "REMOVE_BOOK";
-export const REFRESH_GLOBAL_LIST = "REFRESH_GLOBAL_LIST";
+export const ADD_BOOK: string = "ADD_BOOK";
+export const REMOVE_BOOK: string = "REMOVE_BOOK";
+export const REFRESH_GLOBAL_LIST: string = "REFRESH_GLOBAL_LIST";
