@@ -19,18 +19,19 @@ class BookList extends React.Component<IBookListProps> {
   }
 
   public render() {
+    console.log(this.props.books);
     return (
       <ul className="books-list">
-        {this.props.books.map((el: IBook) => {
+        {Object.keys(this.props.books).map((el: any) => {
           return (
             <li
               className="books-list__item"
-              key={el.id}>
+              key={this.props.books[el].id}>
               <Book
-                bookData={el}
+                bookData={this.props.books[el]}
                 onBtnClick={this.onBtnClick}
                 btnText={this.props.bookBtnText}
-                id={el.id} />
+                id={this.props.books[el].id} />
             </li>
           )
         })}
