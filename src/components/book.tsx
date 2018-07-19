@@ -1,25 +1,27 @@
 import * as React from "react";
+import IBook from '../interfaces/IBook';
 import './book.css';
 
-interface IBook {
-  bookData: object,
-  onBtnClick: any,
-  id: string
+interface IBookProps {
+  bookData: IBook;
+  id: string;
+  btnText: string;
+  onBtnClick(id: string): any;
 }
 
-class Book extends React.Component<IBook> {
+class Book extends React.Component<IBookProps> {
   public constructor(props: any) {
     super(props);
     this.onBtnClick = this.onBtnClick.bind(this);
   }
 
-  public onBtnClick(e: MouseEvent) {
-    const bookId = (e as any).target.dataset.id;
-    this.props.onBtnClick(bookId);
+  public onBtnClick(e: React.MouseEvent<HTMLButtonElement>) {
+    const bookId = e.currentTarget.dataset.id;
+    this.props.onBtnClick(bookId as string);
 
   }
   public render() {
-    const { volumeInfo } = (this as any).props.bookData;
+    const { volumeInfo } = this.props.bookData;
 
     return (
       <article className="book">
@@ -33,8 +35,8 @@ class Book extends React.Component<IBook> {
         </div>
         <button
           className="button book__button"
-          onClick={(this as any).onBtnClick}
-          data-id={this.props.id}>kekes</button>
+          onClick={this.onBtnClick}
+          data-id={this.props.id}>{this.props.btnText}</button>
       </article>
     );
   }
@@ -49,20 +51,20 @@ const Subtitle = (props: any) => {
 };
 
 const PubDate = (props: any) => {
-  const date = props.publishedDate;
-  if (date) {
-    if (date.search(/^[0-9]{4}$/) === 0) {
-      return <span className="book__date small italic">{date}</span>
-    } else if (date.search(/^[0-9]{4}-[0-9]{2}$/) === 0) {
-      let dt = new Date(date);
+  const initialDate = props.publishedDate;
+  if (initialDate) {
+    if (initialDate.search(/^[0-9]{4}$/) === 0) {
+      return <span className="book__date small italic">{initialDate}</span>
+    } else if (initialDate.search(/^[0-9]{4}-[0-9]{2}$/) === 0) {
+      const dt = new Date(initialDate);
       const options = { month: 'short', year: 'numeric' };
-      dt = dt.toLocaleDateString('en-GB', options) as any;
-      return <span className="book__date small italic">{dt}</span>
+      const result = dt.toLocaleDateString('en-GB', options);
+      return <span className="book__date small italic">{result}</span>
     } else {
-      let dt = new Date(date);
+      const dt = new Date(initialDate);
       const options = { day: 'numeric', month: 'short', year: 'numeric' };
-      dt = dt.toLocaleDateString('en-GB', options) as any;
-      return <span className="book__date small italic">{dt}</span>
+      const result = dt.toLocaleDateString('en-GB', options);
+      return <span className="book__date small italic">{result}</span>
     }
   } else {
     return null;

@@ -1,7 +1,9 @@
 import * as actionTypes from "../constants/actionTypes";
 import IAction from "../interfaces/IAction";
+import IBook from '../interfaces/IBook';
 
-export function addBook(id: number): IAction {
+
+export function addBook(id: string): IAction {
   return {
     payload: {
       id
@@ -10,7 +12,7 @@ export function addBook(id: number): IAction {
   };
 }
 
-export function removeBook(id: number): IAction {
+export function removeBook(id: string): IAction {
   return {
     payload: {
       id
@@ -19,7 +21,7 @@ export function removeBook(id: number): IAction {
   };
 }
 
-export function refreshGlobalList(newList: object[]): IAction {
+export function refreshGlobalList(newList: IBook[]): IAction {
   return {
     payload: {
       newList

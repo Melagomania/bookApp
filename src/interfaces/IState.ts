@@ -1,4 +1,7 @@
+import IBook from './IBook';
+
+
 export default interface IState {
-  allBooks: object[],
-  myBooks: object[]
+  allBooks: IBook[],
+  myBooks: IBook[]
 }

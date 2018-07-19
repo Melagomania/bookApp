@@ -5,11 +5,26 @@ import * as bookActions from "./actions/booksActions";
 import "./App.css";
 import BookList from "./components/bookList";
 import SearchField from "./components/searchField";
+import IBook from './interfaces/IBook';
 
-class App extends React.Component {
+
+
+interface IAppActions {
+  addBook(): any;
+  removeBook(): any;
+  refreshGlobalList(newList: IBook[]): any;
+}
+
+interface IAppProps {
+  allBooks: any[];
+  myBooks: any[];
+  actions: IAppActions;
+}
+
+class App extends React.Component<IAppProps> {
 
   public sendRequest = (searchQuery: string) => {
-    const { refreshGlobalList } = (this as any).props.actions;
+    const { refreshGlobalList } = this.props.actions;
     const url = "https://www.googleapis.com/books/v1/volumes?maxResults=15&q=" + searchQuery;
     const xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
@@ -31,11 +46,13 @@ class App extends React.Component {
         </header>
         <div className="main-wrapper">
           <BookList
-            books={(this as any).props.allBooks}
-            onBookBtnClick={(this as any).props.actions.addBook} />
+            books={this.props.allBooks}
+            onBookBtnClick={this.props.actions.addBook}
+            bookBtnText={'Add'} />
           <BookList
-            books={(this as any).props.myBooks}
-            onBookBtnClick={(this as any).props.actions.removeBook} />
+            books={this.props.myBooks}
+            onBookBtnClick={this.props.actions.removeBook}
+            bookBtnText={'Remove'} />
         </div>
       </div>
     );

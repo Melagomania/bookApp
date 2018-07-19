@@ -2,14 +2,16 @@ import * as React from "react";
 import './searchField.css';
 
 
-interface ISearchField {
-  onFormSubmit: any;
+interface ISearchFieldProps {
+  onFormSubmit(query: string): void;
 }
 
-class SearchField extends React.Component<ISearchField> {
+class SearchField extends React.Component<ISearchFieldProps> {
+  private inputRef: React.RefObject<HTMLInputElement>;
+
   public constructor(props: any) {
     super(props);
-    (this as any).inputRef = React.createRef();
+    this.inputRef = React.createRef();
   }
 
   public render() {
@@ -21,7 +23,7 @@ class SearchField extends React.Component<ISearchField> {
           placeholder="Search"
           className="search-form__input"
           type="text"
-          ref={(this as any).inputRef} />
+          ref={this.inputRef} />
         <button
           type="submit"
           className="button search-form__button">Search</button>
@@ -29,10 +31,12 @@ class SearchField extends React.Component<ISearchField> {
     );
   }
 
-  private onSubmitHandler = (e: any) => {
+  private onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const query = (this as any).inputRef.current.value;
-    this.props.onFormSubmit(query);
+    if (this.inputRef.current) {
+      const query = this.inputRef.current.value;
+      this.props.onFormSubmit(query);
+    }
   }
 }
 export default SearchField;

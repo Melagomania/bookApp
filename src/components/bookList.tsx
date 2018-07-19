@@ -1,13 +1,15 @@
 import * as React from "react";
+import IBook from '../interfaces/IBook';
 import Book from './book';
 
-interface IBookList {
-  books: any,
-  onBookBtnClick: any
+interface IBookListProps {
+  books: IBook[];
+  bookBtnText: string;
+  onBookBtnClick(id: string): any;
 }
 
-class BookList extends React.Component<IBookList> {
-  constructor(props: any) {
+class BookList extends React.Component<IBookListProps> {
+  constructor(props: IBookListProps) {
     super(props);
     this.onBtnClick = this.onBtnClick.bind(this);
   }
@@ -19,7 +21,7 @@ class BookList extends React.Component<IBookList> {
   public render() {
     return (
       <ul className="books-list">
-        {(this as any).props.books.map((el: any) => {
+        {this.props.books.map((el: IBook) => {
           return (
             <li
               className="books-list__item"
@@ -27,6 +29,7 @@ class BookList extends React.Component<IBookList> {
               <Book
                 bookData={el}
                 onBtnClick={this.onBtnClick}
+                btnText={this.props.bookBtnText}
                 id={el.id} />
             </li>
           )

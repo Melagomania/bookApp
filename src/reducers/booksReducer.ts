@@ -11,18 +11,18 @@ export default function booksReducer(state: IState = initialState, action: IActi
   switch (action.type) {
     case actionTypes.REFRESH_GLOBAL_LIST: {
       return {
-        allBooks: (action as any).payload.newList,
+        allBooks: action.payload.newList,
         myBooks: [...state.myBooks]
       };
     }
     case actionTypes.ADD_BOOK: {
       for (const i of state.myBooks) {
-        if ((i as any).id === (action as any).payload.id) {
+        if (i.id === action.payload.id) {
           return state;
         }
       }
       for (const i of state.allBooks) {
-        if ((i as any).id === (action as any).payload.id) {
+        if ((i.id === action.payload.id)) {
           return {
             allBooks: [...state.allBooks],
             myBooks: [...state.myBooks, i]
@@ -33,9 +33,9 @@ export default function booksReducer(state: IState = initialState, action: IActi
     }
     case actionTypes.REMOVE_BOOK: {
       for (const i in state.myBooks) {
-        if ((state.myBooks[i] as any).id === (action as any).payload.id) {
+        if ((state.myBooks[i]).id === action.payload.id) {
           const newArr = Array.from(state.myBooks);
-          newArr.splice((i as any), 1);
+          newArr.splice(+i, 1);
           return {
             allBooks: [...state.allBooks],
             myBooks: [...newArr]
