@@ -1,5 +1,5 @@
 import * as React from "react";
-import IBook from '../interfaces/IBook';
+import IBook from '../../interfaces/IBook';
 import './book.css';
 
 interface IBookProps {

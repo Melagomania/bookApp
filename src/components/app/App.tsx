@@ -1,23 +1,23 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as bookActions from "./actions/booksActions";
+import * as bookActions from "../../actions/booksActions";
+import IBook from '../../interfaces/IBook';
+import BookList from "../bookList/bookList";
+import SearchField from "../searchField/searchField";
 import "./App.css";
-import BookList from "./components/bookList";
-import SearchField from "./components/searchField";
-import IBook from './interfaces/IBook';
 
 
 
 interface IAppActions {
-  addBook(): any;
-  removeBook(): any;
+  addBook(id: string): any;
+  removeBook(id: string): any;
   refreshGlobalList(newList: IBook[]): any;
 }
 
 interface IAppProps {
-  allBooks: any[];
-  myBooks: any[];
+  allBooks: IBook[];
+  myBooks: IBook[];
   actions: IAppActions;
 }
 

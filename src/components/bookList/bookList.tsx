@@ -1,6 +1,6 @@
 import * as React from "react";
-import IBook from '../interfaces/IBook';
-import Book from './book';
+import IBook from '../../interfaces/IBook';
+import Book from '../book/book';
 
 interface IBookListProps {
   books: IBook[];
