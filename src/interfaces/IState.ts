@@ -1,7 +1,8 @@
 import IBook from './IBook';
+import IBookList from './IBookList';
 
 
 export default interface IState {
-  allBooks: any,
-  myBooks: any
+  allBooks: IBookList;
+  myBooks: IBookList;
 }

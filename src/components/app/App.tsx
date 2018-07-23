@@ -7,18 +7,16 @@ import BookList from "../bookList/bookList";
 import SearchField from "../searchField/searchField";
 import "./App.css";
 
-
+interface IAppProps {
+  allBooks: IBook[];
+  myBooks: IBook[];
+  actions: IAppActions;
+}
 
 interface IAppActions {
   addBook(id: string): any;
   removeBook(id: string): any;
   refreshGlobalList(newList: IBook[]): any;
-}
-
-interface IAppProps {
-  allBooks: IBook[];
-  myBooks: IBook[];
-  actions: IAppActions;
 }
 
 class App extends React.Component<IAppProps> {
@@ -61,14 +59,15 @@ class App extends React.Component<IAppProps> {
 
 function mapStateToProps(state: any) {
   return {
-    allBooks: state.booksReducer.allBooks,
-    myBooks: state.booksReducer.myBooks
+    allBooks: state.books.allBooks,
+    myBooks: state.books.myBooks
   };
 }
 
 function mapDispatchToProps(dispatch: any) {
   return { actions: bindActionCreators(bookActions, dispatch) };
 }
+
 
 export default connect(
   mapStateToProps,

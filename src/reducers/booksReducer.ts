@@ -1,6 +1,7 @@
 import * as actionTypes from "../constants/actionTypes";
 import IAction from "../interfaces/IAction";
 import IBook from "../interfaces/IBook";
+import IBookList from "../interfaces/IBookList";
 import IState from "../interfaces/IState";
 
 const initialState: IState = {
@@ -8,9 +9,8 @@ const initialState: IState = {
   myBooks: {}
 };
 
-
-function arrayToMap(array: IBook[]): any {
-  const res = {};
+function arrayToMap(array: IBook[]): IBookList {
+  const res: IBookList = {};
   for (const i of array) {
     res[i.id] = {
       id: i.id,
@@ -24,12 +24,12 @@ export default function booksReducer(state: IState = initialState, action: IActi
   switch (action.type) {
     case actionTypes.REFRESH_GLOBAL_LIST: {
       return {
-        allBooks: arrayToMap((action as any).payload.newList),
+        allBooks: arrayToMap(action.payload.newList as IBook[]),
         myBooks: { ...state.myBooks }
       };
     }
     case actionTypes.ADD_BOOK: {
-      const bookId = (action as any).payload.id;
+      const bookId = action.payload.id as string;
       return {
         allBooks: { ...state.allBooks },
         myBooks: {
@@ -39,7 +39,7 @@ export default function booksReducer(state: IState = initialState, action: IActi
       };
     }
     case actionTypes.REMOVE_BOOK: {
-      const bookId = (action as any).payload.id;
+      const bookId = action.payload.id as string;
       const newList = Object.assign({}, state.myBooks);
       delete newList[bookId];
       return {

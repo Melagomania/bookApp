@@ -19,7 +19,6 @@ class BookList extends React.Component<IBookListProps> {
   }
 
   public render() {
-    console.log(this.props.books);
     return (
       <ul className="books-list">
         {Object.keys(this.props.books).map((el: any) => {
