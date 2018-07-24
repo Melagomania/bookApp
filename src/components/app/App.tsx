@@ -3,13 +3,17 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as bookActions from "../../actions/booksActions";
 import IBook from '../../interfaces/IBook';
+import IBookList from "../../interfaces/IBookList";
+import IState from "../../interfaces/IState";
+import { getAllBooks } from '../../reducers';
+import { getMyBooks } from '../../reducers';
 import BookList from "../bookList/bookList";
 import SearchField from "../searchField/searchField";
 import "./App.css";
 
 interface IAppProps {
-  allBooks: IBook[];
-  myBooks: IBook[];
+  allBooks: IBookList;
+  myBooks: IBookList;
   actions: IAppActions;
 }
 
@@ -59,14 +63,15 @@ class App extends React.Component<IAppProps> {
 
 function mapStateToProps(state: any) {
   return {
-    allBooks: state.books.allBooks,
-    myBooks: state.books.myBooks
+    allBooks: getAllBooks(state),
+    myBooks: getMyBooks(state)
   };
 }
 
 function mapDispatchToProps(dispatch: any) {
   return { actions: bindActionCreators(bookActions, dispatch) };
 }
+
 
 
 export default connect(

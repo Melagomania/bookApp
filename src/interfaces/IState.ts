@@ -1,4 +1,3 @@
-import IBook from './IBook';
 import IBookList from './IBookList';
 
 

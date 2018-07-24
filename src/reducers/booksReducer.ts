@@ -53,3 +53,11 @@ export default function booksReducer(state: IState = initialState, action: IActi
   }
 }
 
+export function allBooks(state: any): IBookList {
+  return state.books.allBooks;
+}
+
+export function myBooks(state: any): IBookList {
+  return state.books.myBooks;
+}
+

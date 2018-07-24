@@ -1,9 +1,9 @@
 import * as React from "react";
-import IBook from '../../interfaces/IBook';
+import IBookList from "../../interfaces/IBookList";
 import Book from '../book/book';
 
 interface IBookListProps {
-  books: IBook[];
+  books: IBookList;
   bookBtnText: string;
   onBookBtnClick(id: string): any;
 }
