@@ -2,16 +2,16 @@ import { combineReducers } from 'redux';
 import IBookList from '../interfaces/IBookList';
 import IState from '../interfaces/IState';
 import booksReducer from './booksReducer';
-import { allBooks } from './booksReducer';
-import { myBooks } from './booksReducer';
+import { selectAllBooks as fromAllBooks } from './booksReducer';
+import { selectMyBooks as fromMyBooks } from './booksReducer';
 
 export default combineReducers({
   books: booksReducer
 });
 
-export function getAllBooks(state: any): IBookList {
-  return allBooks(state);
+export function selectAllBooks(state: any): IBookList {
+  return fromAllBooks(state);
 }
-export function getMyBooks(state: any): IBookList {
-  return myBooks(state);
+export function selectMyBooks(state: any): IBookList {
+  return fromMyBooks(state);
 }

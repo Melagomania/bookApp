@@ -27,7 +27,24 @@
   .header {
     background-color: #001f32;
     padding: 20px 0;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
+  }
+
+ .main-navigation {
+   float: left;
+ }
+
+  .nav-link {
+    margin-right: 20px;
+    display: inline-block;
+    font-size: 17px;
+    vertical-align: middle;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .nav-link--active {
+    text-decoration: underline;
   }
 
 

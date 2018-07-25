@@ -1,19 +1,15 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import { NavLink, Route, Switch } from 'react-router-dom'
 import { bindActionCreators } from "redux";
 import * as bookActions from "../../actions/booksActions";
 import IBook from '../../interfaces/IBook';
-import IBookList from "../../interfaces/IBookList";
-import IState from "../../interfaces/IState";
-import { getAllBooks } from '../../reducers';
-import { getMyBooks } from '../../reducers';
-import BookList from "../bookList/bookList";
+import AllBooksList from "../allBooksList/allBooksList";
+import MyBooksList from "../myBooksList/myBooksList";
 import SearchField from "../searchField/searchField";
 import "./App.css";
 
 interface IAppProps {
-  allBooks: IBookList;
-  myBooks: IBookList;
   actions: IAppActions;
 }
 
@@ -24,18 +20,14 @@ interface IAppActions {
 }
 
 class App extends React.Component<IAppProps> {
-
   public sendRequest = (searchQuery: string) => {
     const { refreshGlobalList } = this.props.actions;
     const url = "https://www.googleapis.com/books/v1/volumes?maxResults=15&q=" + searchQuery;
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", url, true);
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        refreshGlobalList(JSON.parse(xhr.response).items);
-      }
-    };
-    xhr.send();
+    fetch(url, { method: 'GET', mode: "cors" })
+      .then((response) => {
+        response.json()
+          .then(json => refreshGlobalList(json.items));
+      });
   }
 
   public render() {
@@ -43,38 +35,33 @@ class App extends React.Component<IAppProps> {
       <div className="App">
         <header className="header">
           <div className="main-wrapper clearfix">
+            <nav className="main-navigation">
+              <NavLink className="nav-link" activeClassName="nav-link--active" to="/allBooks">All books</NavLink>
+              <NavLink className="nav-link" activeClassName="nav-link--active" to="/myBooks">My books</NavLink>
+            </nav>
             <SearchField onFormSubmit={this.sendRequest} />
           </div>
         </header>
         <div className="main-wrapper">
-          <BookList
-            books={this.props.allBooks}
-            onBookBtnClick={this.props.actions.addBook}
-            bookBtnText={'Add'} />
-          <BookList
-            books={this.props.myBooks}
-            onBookBtnClick={this.props.actions.removeBook}
-            bookBtnText={'Remove'} />
+          <Switch>
+            <Route
+              path='/myBooks'
+              component={MyBooksList} />
+            <Route
+              path='/allBooks'
+              component={AllBooksList} />
+          </Switch>
         </div>
       </div>
     );
   }
 }
 
-function mapStateToProps(state: any) {
-  return {
-    allBooks: getAllBooks(state),
-    myBooks: getMyBooks(state)
-  };
-}
-
 function mapDispatchToProps(dispatch: any) {
   return { actions: bindActionCreators(bookActions, dispatch) };
 }
 
-
-
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(App);
