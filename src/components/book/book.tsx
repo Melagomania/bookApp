@@ -1,5 +1,6 @@
 import * as React from "react";
 import IBook from '../../interfaces/IBook';
+import FullBookInfo from '../bookInfo/bookInfo';
 import './book.css';
 
 interface IBookProps {
@@ -9,10 +10,35 @@ interface IBookProps {
   onBtnClick(id: string): any;
 }
 
-class Book extends React.Component<IBookProps> {
+interface IBookState {
+  showFullDescription: boolean;
+  currentBookId: string | null;
+}
+
+class Book extends React.Component<IBookProps, IBookState> {
   public constructor(props: any) {
     super(props);
     this.onBtnClick = this.onBtnClick.bind(this);
+    this.openFullDescription = this.openFullDescription.bind(this);
+    this.closeFullDescription = this.closeFullDescription.bind(this);
+    this.state = {
+      currentBookId: null,
+      showFullDescription: false
+    }
+  }
+
+  public openFullDescription(e: any) {
+    const id = e.target.dataset.id;
+    this.setState({
+      currentBookId: id,
+      showFullDescription: true
+    });
+  }
+  public closeFullDescription() {
+    this.setState({
+      currentBookId: null,
+      showFullDescription: false
+    });
   }
 
   public onBtnClick(e: React.MouseEvent<HTMLButtonElement>) {
@@ -31,12 +57,21 @@ class Book extends React.Component<IBookProps> {
         <PubDate publishedDate={volumeInfo.publishedDate} /><br />
         <div className="book__inner-wrapper">
           <Image src={volumeInfo.imageLinks} />
-          <Description description={volumeInfo.description} />
+          <Description
+            moreClick={this.openFullDescription}
+            id={this.props.id}
+            description={volumeInfo.description} />
         </div>
         <button
           className="button book__button"
           onClick={this.onBtnClick}
           data-id={this.props.id}>{this.props.btnText}</button>
+        {this.state.showFullDescription ?
+          <FullBookInfo
+            onCloseClick={this.closeFullDescription}
+            description={volumeInfo.description} /> :
+          null
+        }
       </article>
     );
   }
@@ -80,10 +115,17 @@ const Image = (props: any) => {
 };
 
 const Description = (props: any) => {
-  let description = props.description;
+  let { description } = props;
   if (description) {
     if (description.length > 200) {
-      description = description.slice(0, 200) + '...';
+      description = description.slice(0, 200);
+      return (
+        <p className="book__description">{description}
+          <button
+            data-id={props.id}
+            onClick={props.moreClick}>...mode</button>
+        </p>
+      )
     }
     return (
       <p className="book__description">{description}</p>

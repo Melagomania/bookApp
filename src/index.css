@@ -47,6 +47,18 @@
     text-decoration: underline;
   }
 
+  .inner-nav-link {
+    display: inline-block;
+    margin-bottom: 50px;
+    margin-right: 20px;
+    font-size: 18px;
+    color: #002faf;
+    text-decoration: none;
+  }
+  .inner-nav-link--active {
+    text-decoration: underline;
+  }
+
 
   .button {
     height: 40px;
