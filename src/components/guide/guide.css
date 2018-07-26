@@ -1,0 +1,8 @@
+.guide-list {
+  text-align-last: left;
+  font-size: 18px;
+}
+
+.guide-list__item {
+  margin-bottom: 10px;
+}

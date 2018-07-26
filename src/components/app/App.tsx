@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { NavLink, Route, Switch } from 'react-router-dom'
+import { NavLink, Redirect, Route, Switch } from 'react-router-dom'
 import { bindActionCreators } from "redux";
 import * as bookActions from "../../actions/booksActions";
 import IBook from '../../interfaces/IBook';
@@ -44,11 +44,16 @@ class App extends React.Component<IAppProps> {
         </header>
         <div className="main-wrapper">
           <Switch>
+
             <Route
+              exact={true}
               path='/myBooks'
               component={MyBooksList} />
             <Route
+              exact={true}
               path='/allBooks'
+              component={AllBooksList} />
+            <Route
               component={AllBooksList} />
           </Switch>
         </div>
