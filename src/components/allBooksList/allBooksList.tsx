@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { NavLink, Redirect, Route, Switch } from 'react-router-dom'
 import { bindActionCreators } from "redux";
 import * as bookActions from "../../actions/booksActions";
-import IBookList from "../../interfaces/IBookList";
 import { selectAllBooks } from '../../reducers';
 import BooksList from '../bookList/bookList';
 import Guide from '../guide/guide';
